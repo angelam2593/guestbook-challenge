@@ -41,7 +41,7 @@
 				if($password_1 != $password_2){
 					array_push($errors, "The passwords don't match");
 				}
-				if(!(validateEmail($email))){
+				if(validateEmail($email) == false && !empty($email)){
 					array_push($errors, "Invalid email");
 				}
 			}
