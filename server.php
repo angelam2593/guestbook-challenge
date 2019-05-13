@@ -30,22 +30,17 @@
 
 			if(empty($username) || empty($email) || empty($password_1) || empty($password_2))
 			{
-				if(empty($username)){
+				if(empty($username))
 					array_push($errors, "Missing username");
-				}
-				if(empty($email)){
+				if(empty($email))
 					array_push($errors, "Missing email");
-				}
-				if(empty($password_1)){
+				if(empty($password_1))
 					array_push($errors, "Missing password");
-				}
-				if($password_1 != $password_2){
+				if($password_1 != $password_2)
 					array_push($errors, "The passwords don't match");
-				}
-				if(validateEmail($email) == false && !empty($email)){
-					array_push($errors, "Invalid email");
-				}
 			}
+			else if(validateEmail($email) == false && !empty($email))
+					array_push($errors, "Invalid email");
 			else if($email == $row['email']){
 				array_push($errors, "The user already exists!");
 			}
