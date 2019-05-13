@@ -26,6 +26,7 @@
             </div>
             <div class="card-body">
               <form method="post" action="login.php">
+                <input type="hidden" name="token" value="<?php echo e(Token::generate()); ?>">
                 <?php include('errors.php'); ?>
                 <div class="input-group">
                   <p>Username</label>
