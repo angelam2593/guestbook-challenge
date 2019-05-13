@@ -9,8 +9,9 @@
 
 	$db = mysqli_connect('localhost', 'root', '', 'php_db') or die($db);
 
-	$query_messages = "SELECT * FROM message";
-	$result_message = mysqli_query($db, $query_messages);
+	$query_messages = $db->prepare("SELECT * FROM message");
+	$query_messages->execute();
+	$result_message = $query_messages->get_result();
 
 	if (isset($_POST['register']))
 	{
