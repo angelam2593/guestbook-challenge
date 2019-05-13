@@ -8,7 +8,7 @@
 
     <!-- Bootstrap CSS -->
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
-    <title>Register</title>
+    <title>Guestbook</title>
     <style>
       .centered {
         margin-left:auto;
@@ -23,14 +23,14 @@
         <h3>Home page</h3>
         <?php if (isset($_SESSION['success'])): ?>
           <?php 
-            echo $_SESSION['success']; 
+            echo e($_SESSION['success']); 
             unset($_SESSION['success']);
           ?>
         <?php endif ?>
 
         <?php if (isset($_SESSION['username'])): ?>
           <?php 
-            echo $_SESSION['username']; 
+            echo e($_SESSION['username']); 
           ?>
         <?php endif ?>
         <a href="index.php?logout='1'">Logout</a>
@@ -39,6 +39,7 @@
     <div class="row">
       <div class="col-md-12">
          <form action="index.php" method="post">
+           <input type="hidden" name="token" value="<?php echo e(Token::generate()); ?>">
            <textarea name="message" rows="10" cols=59></textarea><br>
            <input type="submit" name="insertMessage" value="Enter">
            <input type="reset" name="reset" value="Clear Text">
@@ -53,22 +54,22 @@
             {
                 while($row = mysqli_fetch_assoc($result_message)) 
                 {
-                    echo "<b>Message</b>: ".$row["body"]. " [".$row["updated_at"]."] by ".get_user_by($row['user_id'])."<br>";
-                    echo getAllComments($db, $row["id"]); 
+                    echo "<b>Message</b>: ".e($row["body"]). " [".e($row["updated_at"])."] by ".e(get_user_by($db, $row['user_id']))."<br>";
+                    echo e(getAllComments($db, $row["id"])); 
                     echo "<form action='addComment.php' method='POST'>
-                            <input name='userId' type='hidden' value=".$_SESSION["user_id"].">
-                            <input name='messageId' type='hidden' value=".$row["id"].">
+                            <input name='userId' type='hidden' value=".e($_SESSION["user_id"]).">
+                            <input name='messageId' type='hidden' value=".e($row["id"]).">
                             <button>Add comment</button>
                           </form>";
                     if($row["user_id"] == $_SESSION["user_id"])
                       {
                         echo "<form action='editMessage.php' method='POST'>
-                                <input name='messageId' type='hidden' value=".$row["id"].">
+                                <input name='messageId' type='hidden' value=".e($row["id"]).">
                                 <button>Edit this message</button>
                             </form>";
-                        echo "<form action='".deleteMessage($db)."' method='POST'>
-                                <input name='messageId' type='hidden' value=".$row["id"].">
-                                <button type='submit' name='deleteMessage'>Delete this message</button>
+                        echo "<form action='deleteMessage.php' method='POST'>
+                                <input name='messageId' type='hidden' value=".e($row["id"]).">
+                                <button>Delete this message</button>
                             </form>";
                       }
                 }

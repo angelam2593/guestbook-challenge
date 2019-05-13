@@ -26,14 +26,15 @@
             </div>
             <div class="card-body">
               <form method="post" action="register.php">
+                <input type="hidden" name="token" value="<?php echo e(Token::generate()); ?>">
                 <?php include('errors.php'); ?>
                 <div class="input-group">
                   <label>Username</label>
-                  <input type="text" name="username" value="<?php echo $username; ?>">
+                  <input type="text" name="username" value="<?php echo e($username); ?>">
                 </div>
                 <div class="input-group">
                   <label>Email</label>
-                  <input type="text" name="email" value="<?php echo $email; ?>">
+                  <input type="text" name="email" value="<?php echo e($email); ?>">
                 </div>
                 <div class="input-group">
                   <label>Password</label>
